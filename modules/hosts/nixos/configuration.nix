@@ -279,9 +279,16 @@
   # ─────────────────────────────────────────────
   # Servicios del sistema
   # ─────────────────────────────────────────────
-  services.gnome.gnome-keyring.enable = true;
+  #services.gnome.gnome-keyring.enable = true;
+  # Activa GNOME Keyring y el nuevo Agente SSH moderno por separado
+  services.gnome = {
+    gnome-keyring.enable = true; # Para contraseñas de aplicaciones (Chrome, Brave, etc)
+    gcr-ssh-agent.enable = true; # NUEVO: Habilita el servicio nativo de SSH para Systemd
+  };
+  security.pam.services.login.gnupg.enable = true; # Ayuda a desbloquear al iniciar sesión
   programs.seahorse.enable = true;
   security.pam.services.hyprland.enableGnomeKeyring = true;
+  security.pam.services.ly.enableGnomeKeyring = true;
   security.pam.services.login.enableGnomeKeyring = true;
   services.dbus.enable = true;
 #services.dbus.packages = [ pkgs.gnome-keyring pkgs.gcr ];

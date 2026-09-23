@@ -171,8 +171,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1790151635,
-        "narHash": "sha256-tx8aINdHv/4FdBIpg6EA2WgQNsQaZu7jdmiBYw9suQk=",
+        "lastModified": 1790153954,
+        "narHash": "sha256-U+/6DRNI++OzoWNttVlLs4g6I6/AfscEa3i/beaW4Bs=",
         "path": "/home/cris/Workspace/build_pkgs/ziggity",
         "type": "path"
       },
