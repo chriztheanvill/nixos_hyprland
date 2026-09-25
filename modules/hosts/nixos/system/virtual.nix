@@ -25,6 +25,6 @@
     virt-manager
     virt-viewer
     spice-gtk  # para clipboard y display SPICE
-    OVMF       # firmware UEFI estandar (no-Xen) para QEMU
+    OVMF.fd       # firmware UEFI estandar (no-Xen) para QEMU
   ];
 }
