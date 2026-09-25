@@ -177,6 +177,7 @@
     antares
     # beekeeper-studio  ## insecure
     # godot_4           ## version stable
+    nmap ## `ncat`, es para godot
 
     # ============================================================
     # OTROS (NO ENCONTRADOS EN NIXPKGS)
