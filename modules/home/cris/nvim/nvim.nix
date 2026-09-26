@@ -15,5 +15,6 @@
       marksman
     lua-language-server
     nil
+    gdtoolkit_4
   ];
 }

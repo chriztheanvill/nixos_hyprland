@@ -14,6 +14,21 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+	# zRAM
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd"; # El algoritmo más eficiente en compresión/velocidad
+    memoryPercent = 50; # Reserva hasta el 50% de tu RAM física (16GB de zRAM virtuales)
+  };
+
+	# Optimizar el comportamiento del Kernel (Opcional pero recomendado)
+  boot.kernel.sysctl = {
+    # Controla qué tan agresivo es el sistema para mandar datos a la swap.
+    # Con zRAM, un valor de 100-150 es ideal porque prefieres comprimir en RAM
+    # antes de desalojar la caché del sistema de archivos (pagecache).
+    "vm.swappiness" = 100;
+  };
+
   ## discos duros externos y soporte
   boot.supportedFilesystems = [ "ntfs" "exfat" ];
 

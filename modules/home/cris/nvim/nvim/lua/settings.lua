@@ -39,14 +39,19 @@ opt.ignorecase        = true
 opt.hlsearch          = true
 opt.incsearch         = true
 opt.inccommand        = "nosplit"
+-- spaces o tab
+-- tab
 opt.tabstop           = 2
-opt.softtabstop       = 0
-opt.expandtab         = true
+opt.softtabstop       = 2
 opt.shiftwidth        = 2
-opt.autoindent        = true
-opt.smartindent       = true
+opt.expandtab         = false -- true: tab to spaces, false: spaces to tab
 opt.smarttab          = true
-opt.copyindent        = true
+opt.autoindent        = true  -- copia el indentado de la línea anterior
+opt.smartindent       = false -- porque se usa `Treesitter`
+opt.copyindent        = true  -- usar false para forzar spaces
+opt.preserveindent    = true  -- para tabs
+-- spaces o tab
+--
 opt.laststatus        = 3
 opt.showtabline       = 1 -- Mostrar tabs: 0 nunca, 1 cuando hay 2 o mas, 2 siempre
 opt.updatetime        = 250
@@ -71,7 +76,7 @@ vim.opt.concealcursor = 'nc' -- oculta también en modo normal, no solo cuando e
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Ctrl+C = ESC en todos los modos
 vim.keymap.set({ "n", "i", "v", "x", "s" }, "<C-c>", "<Esc>",
-  { remap = true, desc = "Ctrl+C actúa exactamente como ESC" })
+	{ remap = true, desc = "Ctrl+C actúa exactamente como ESC" })
 
 -- Explore:
 -- Ocultar el banner superior de ayuda que quita mucho espacio
@@ -96,27 +101,28 @@ opt.scrolloff = 10
 opt.sidescrolloff = 10
 -- Clipboard System
 vim.g.clipboard = {
-  name = 'wl-clipboard',
-  copy = {
-    ['+'] = 'wl-copy --type text/plain',
-    ['*'] = 'wl-copy --type text/plain --primary',
-  },
-  paste = {
-    ['+'] = 'wl-paste --no-newline',
-    ['*'] = 'wl-paste --no-newline --primary',
-  },
-  cache_enabled = true,
+	name = 'wl-clipboard',
+	copy = {
+		['+'] = 'wl-copy --type text/plain',
+		['*'] = 'wl-copy --type text/plain --primary',
+	},
+	paste = {
+		['+'] = 'wl-paste --no-newline',
+		['*'] = 'wl-paste --no-newline --primary',
+	},
+	cache_enabled = true,
 }
 
 -- Caracteres visibles para espacios
 opt.list = true
 opt.listchars = {
-  space = "·",
-  tab = "▸ ",
-  trail = "•",
-  extends = "⟩",
-  precedes = "⟨",
-  nbsp = "␣",
+	-- space    = "·", -- no confundir, esto es un espacio
+	-- tab = "▸ ", -- para spaces
+	tab      = "▏ ", -- para tabs
+	trail    = "•",
+	extends  = "⟩",
+	precedes = "⟨",
+	nbsp     = "␣",
 }
 -- opt.listchars:append("space:⋅")
 
@@ -140,8 +146,9 @@ opt.listchars = {
 -- end
 
 if not vim.g.vscode then
-  vim.opt.list = true
-  vim.opt.listchars = { tab = '» ', trail = '·' }
+	vim.opt.list = true
+	-- vim.opt.listchars = { tab = '» ', trail = '·' }
+	opt.listchars:append({ tab = "» ", trail = "·" }) -- fusiona, no reemplaza
 end
 
 -- Crear undodir si no existe
@@ -151,27 +158,27 @@ end
 -- Sirve para cuando estes en ~/Downloads y ejecutes `nvim /media/cris/Jazz/Documents/`
 -- nvim tome el directorio como argumento y lo ponga como directorio base.
 vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    local arg = vim.fn.argv(0)
-    if arg and arg ~= "" then
-      local dir = vim.fn.isdirectory(arg) == 1 and arg or vim.fn.fnamemodify(arg, ":p:h")
-      vim.cmd("cd " .. vim.fn.fnameescape(dir))
-    end
-  end,
+	callback = function()
+		local arg = vim.fn.argv(0)
+		if arg and arg ~= "" then
+			local dir = vim.fn.isdirectory(arg) == 1 and arg or vim.fn.fnamemodify(arg, ":p:h")
+			vim.cmd("cd " .. vim.fn.fnameescape(dir))
+		end
+	end,
 })
 
 -- ============================================================
 -- Cursor: restaurar posición al abrir archivo
 -- ============================================================
 vim.api.nvim_create_autocmd("BufReadPost", {
-  desc = "Restaurar posición del cursor al abrir un archivo",
-  callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local line_count = vim.api.nvim_buf_line_count(0)
-    if mark[1] > 0 and mark[1] <= line_count then
-      vim.api.nvim_win_set_cursor(0, mark)
-    end
-  end,
+	desc = "Restaurar posición del cursor al abrir un archivo",
+	callback = function()
+		local mark = vim.api.nvim_buf_get_mark(0, '"')
+		local line_count = vim.api.nvim_buf_line_count(0)
+		if mark[1] > 0 and mark[1] <= line_count then
+			vim.api.nvim_win_set_cursor(0, mark)
+		end
+	end,
 })
 
 -- Just if the theme has bad frameborders
@@ -215,65 +222,65 @@ vim.opt.foldlevelstart = 1
 -- Autoclose: paréntesis, brackets, comillas
 -- ============================================================
 local pairs_map = {
-  ["("] = ")",
-  ["["] = "]",
-  ["{"] = "}",
-  ['"'] = '"',
-  ["'"] = "'",
-  ["`"] = "`",
+	["("] = ")",
+	["["] = "]",
+	["{"] = "}",
+	['"'] = '"',
+	["'"] = "'",
+	["`"] = "`",
 }
 
 for open, close in pairs(pairs_map) do
-  -- Al escribir el caracter de apertura, inserta el cierre y mueve cursor al medio
-  vim.keymap.set("i", open, function()
-    -- Para comillas: si el char siguiente es igual al cierre, solo mover cursor
-    local col  = vim.api.nvim_win_get_cursor(0)[2]
-    local line = vim.api.nvim_get_current_line()
-    local next = line:sub(col + 1, col + 1)
+	-- Al escribir el caracter de apertura, inserta el cierre y mueve cursor al medio
+	vim.keymap.set("i", open, function()
+		-- Para comillas: si el char siguiente es igual al cierre, solo mover cursor
+		local col  = vim.api.nvim_win_get_cursor(0)[2]
+		local line = vim.api.nvim_get_current_line()
+		local next = line:sub(col + 1, col + 1)
 
-    if open == close and next == close then
-      -- Saltar sobre el cierre existente
-      return "<Right>"
-    end
-    return open .. close .. "<Left>"
-  end, { expr = true, buffer = false }
-  )
+		if open == close and next == close then
+			-- Saltar sobre el cierre existente
+			return "<Right>"
+		end
+		return open .. close .. "<Left>"
+	end, { expr = true, buffer = false }
+	)
 
-  -- Al escribir el caracter de cierre sobre uno existente, saltar en lugar de duplicar
-  if open ~= close then
-    vim.keymap.set("i", close, function()
-      local col  = vim.api.nvim_win_get_cursor(0)[2]
-      local line = vim.api.nvim_get_current_line()
-      local next = line:sub(col + 1, col + 1)
-      if next == close then
-        return "<Right>"
-      end
-      return close
-    end, { expr = true, buffer = false }
-    )
-  end
+	-- Al escribir el caracter de cierre sobre uno existente, saltar en lugar de duplicar
+	if open ~= close then
+		vim.keymap.set("i", close, function()
+			local col  = vim.api.nvim_win_get_cursor(0)[2]
+			local line = vim.api.nvim_get_current_line()
+			local next = line:sub(col + 1, col + 1)
+			if next == close then
+				return "<Right>"
+			end
+			return close
+		end, { expr = true, buffer = false }
+		)
+	end
 end
 
 -- Backspace elimina el par completo si el cursor está entre ellos
 vim.keymap.set("i", "<BS>", function()
-  local col        = vim.api.nvim_win_get_cursor(0)[2]
-  local line       = vim.api.nvim_get_current_line()
-  local prev       = line:sub(col, col)
-  local next       = line:sub(col + 1, col + 1)
-  local auto_pairs = { ["("] = ")", ["["] = "]", ["{"] = "}", ['"'] = '"', ["'"] = "'", ["`"] = "`" }
-  if auto_pairs[prev] == next then
-    return "<Right><BS><BS>"
-  end
-  return "<BS>"
+	local col        = vim.api.nvim_win_get_cursor(0)[2]
+	local line       = vim.api.nvim_get_current_line()
+	local prev       = line:sub(col, col)
+	local next       = line:sub(col + 1, col + 1)
+	local auto_pairs = { ["("] = ")", ["["] = "]", ["{"] = "}", ['"'] = '"', ["'"] = "'", ["`"] = "`" }
+	if auto_pairs[prev] == next then
+		return "<Right><BS><BS>"
+	end
+	return "<BS>"
 end, { expr = true }
 )
 
 -- Triple backtick para bloques de código en markdown
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "markdown" },
-  callback = function()
-    vim.keymap.set("i", "```", "```<CR>```<Up><End>", { buffer = true, desc = "Bloque de código markdown" })
-  end,
+	pattern = { "markdown" },
+	callback = function()
+		vim.keymap.set("i", "```", "```<CR>```<Up><End>", { buffer = true, desc = "Bloque de código markdown" })
+	end,
 })
 
 -- ============================================================

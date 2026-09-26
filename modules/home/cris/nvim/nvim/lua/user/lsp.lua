@@ -8,8 +8,8 @@ vim.o.autocomplete = true
 --   vim.o.pumborder = "rounded"
 --   vim.o.pumheight = 15
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 
 -- ═══════════════════════════════════════════════════════════════
 -- 2. ICONOS DE AUTOCOMPLETADO
@@ -171,9 +171,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     -- CodeLens
-    if client:supports_method("textDocument/codeLens") then
-      vim.lsp.codelens.enable(true, { bufnr = bufnr })
-    end
+    -- if client:supports_method("textDocument/codeLens") then
+    --   vim.lsp.codelens.enable(true, { bufnr = bufnr })
+    -- end
 
     -- Keymaps personalizados
     local bufopts = { buffer = bufnr, silent = true }

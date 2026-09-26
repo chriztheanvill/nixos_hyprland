@@ -89,7 +89,7 @@ if not vim.g.vscode then
   -- require("user.telescope") -- viejo
   require("user.snacks")
   -- require("user.fzf_lua") -- muy simple, consume bastante ram
-  require("user.indent_guides")
+  -- require("user.indent_guides")
   require("user.treesitter")
   require("user.treesitter_textobjects")
   require("user.git_signs")

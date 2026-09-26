@@ -1,17 +1,17 @@
-local map              = function(keys, fn, desc)
+local map                   = function(keys, fn, desc)
   vim.keymap.set("n", keys, fn, { desc = desc })
 end
 
 -- ============================================================
 -- DAP (Debug Adapter Protocol)
 -- ============================================================
-local dap              = require("dap")
-local dapui            = require("dapui")
+local dap                   = require("dap")
+local dapui                 = require("dapui")
 
 -- -- Configuración con LLDB (lldb-vscode / lldb-dap)
 -- -- Requiere: llvm  →  dnf install llvm  /  pacman -S llvm
 -- -- El binario puede llamarse lldb-vscode o lldb-dap según la versión
-dap.adapters.lldb      = {
+dap.adapters.lldb           = {
   type    = "executable",
   command = vim.fn.exepath("lldb-dap"),
   name    = "lldb",
@@ -19,7 +19,7 @@ dap.adapters.lldb      = {
 
 -- Configuración con GDB
 -- Requiere: gdb  →  dnf install gdb  /  pacman -S gdb
-dap.adapters.gdb       = {
+dap.adapters.gdb            = {
   type          = "executable",
   command       = "gdb",
   args          = { "-i", "dap" },
@@ -32,7 +32,7 @@ dap.adapters.gdb       = {
   end,
 }
 
-dap.configurations.zig = {
+dap.configurations.zig      = {
   {
     name         = "Zig: debug (lldb)",
     type         = "lldb",
@@ -72,12 +72,35 @@ dap.configurations.zig = {
       },
     },
   },
+}
 
+dap.adapters.godot          = {
+  type = "server",
+  host = "127.0.0.1",
+  port = 6006,
+}
+
+dap.configurations.gdscript = {
+  {
+    type         = "godot",
+    request      = "launch",
+    name         = "Godot: lanzar escena principal",
+    project      = "${workspaceFolder}",
+    launch_scene = true,
+  },
+  {
+    type         = "godot",
+    request      = "launch",
+    name         = "Godot: lanzar escena actual",
+    project      = "${workspaceFolder}",
+    launch_scene = false, -- lanza la escena abierta en el editor de Godot, no la main
+  },
 }
 
 -- Las mismas configs sirven para C/C++ — reusar el adapter gdb
-dap.configurations.c   = dap.configurations.zig
-dap.configurations.cpp = dap.configurations.zig
+dap.configurations.c        = dap.configurations.zig
+dap.configurations.cpp      = dap.configurations.zig
+dap.configurations.gd       = dap.configurations.gdscript
 
 -- ============================================================
 -- DAP UI
