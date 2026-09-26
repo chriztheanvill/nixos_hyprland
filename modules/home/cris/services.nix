@@ -39,7 +39,7 @@
       };
       Install.WantedBy = [ "graphical-session.target" ];
       Service = {
-        ExecStartPre = "${pkgs.coreutils}/bin/sleep 3";
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
         ExecStart = "${pkgs.strawberry}/bin/strawberry";
         Restart = "on-failure";
         RestartSec = 2;
