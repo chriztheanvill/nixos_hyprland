@@ -8,6 +8,7 @@
   ## para UWSM 
   wayland.windowManager.hyprland.systemd.enable = false;
 
+
 #  home.sessionPath = [
 #    "$HOME/.local/bin"
 #  ];
@@ -90,15 +91,15 @@
 
   imports = [
     ## home
-    ./environment.nix
-    ./hyprland.nix
-    ./noctalia.nix
     ./pkgs.nix
-    ./terminales.nix
+    ./environment.nix
     ./user.nix
-
-    ## nvim
+    ./terminales.nix
     ./nvim/nvim.nix
+
+    ./noctalia.nix
+    ./hyprland.nix
+    ./services.nix
   ];
 
   #programs.home-manager.enable = true;

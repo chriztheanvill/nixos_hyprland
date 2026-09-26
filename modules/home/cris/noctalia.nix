@@ -5,6 +5,7 @@
 
   programs.noctalia = {
     enable = true;
+    systemd.enable = true;
 
     # Configuración declarativa (se traduce a ~/.config/noctalia/settings.toml)
     settings = {

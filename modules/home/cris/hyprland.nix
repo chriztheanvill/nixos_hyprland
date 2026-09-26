@@ -34,21 +34,16 @@
       -- AUTOSTART
       -- ============================================
       hl.on("hyprland.start", function()
-        hl.exec_cmd("noctalia")
         -- hl.exec_cmd("easyeffects")
-        -- hl.exec_cmd("seahorse")
-
-        -- hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'") -- Cambia 'Adwaita-dark' por tu tema
-        -- hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'")
-
-        -- hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-mocha-blue-standard+default'") -- Cambia 'Adwaita-dark' por tu tema
-        -- hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'")
 
         hl.exec_cmd("wl-paste --type text --watch cliphist store")
         hl.exec_cmd("wl-paste --type image --watch cliphist store")
-        hl.exec_cmd("qmmp")
-        hl.exec_cmd("strawberry")
-        -- hl.exec_cmd("${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1")
+
+        -- hl.exec_cmd("qmmp")
+        -- hl.exec_cmd("strawberry")
+
+        -- hl.exec_cmd("sleep 2 && uwsm app -- qmmp")
+        -- hl.exec_cmd("sleep 2 && uwsm app -- strawberry")
       end)
 
       -- ============================================

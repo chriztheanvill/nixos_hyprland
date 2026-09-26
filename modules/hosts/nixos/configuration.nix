@@ -63,7 +63,7 @@
     videoDrivers = [ "amdgpu" ];
   };
   console.useXkbConfig = true;
-  services.displayManager.defaultSession = "hyprland";
+  services.displayManager.defaultSession = "hyprland-uwsm";
 
   # ─────────────────────────────────────────────
   # Usuario

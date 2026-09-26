@@ -34,7 +34,8 @@
     dotDir = config.home.homeDirectory;
     oh-my-zsh = {
       enable = true;
-      theme = "jonathan";
+      theme = "candy";
+      # theme = "jonathan";
       plugins = [ "git" "sudo" "history" "fzf" ];
     };
 

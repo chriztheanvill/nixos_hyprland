@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, username, ... }:
+{ config, pkgs, lib, inputs, username, ... }:
 
 {
   # ─────────────────────────────────────────────
@@ -216,35 +216,6 @@
   services.easyeffects = {
     enable = true;
   };
-
-  # services.hyprsunset = {
-  #   enable = true;
-  #
-  #   settings = {
-  #     # Opcional: limita el brillo máximo para no pasarte
-  #     max-gamma = 150;
-  #
-  #     # NO definimos 'profile' = arranca limpio (gamma 100%, sin filtros)
-  #     # y nunca cambia solo por horario
-  #
-  #     profile = [
-  #       {
-  #         # Sin 'time' = perfil por defecto
-  #         # gamma 1.0 en config file = 100% (valor decimal)
-  #         identity = true;
-  #         gamma = 1.0;
-  #       }
-  #       # {
-  #       #   time = "07:30";
-  #       #   identity = true;
-  #       # }
-  #       # {
-  #       #   time = "21:00";
-  #       #   gamma = 0.8;
-  #       # }
-  #     ];
-  #   };
-  # };
 
   ## Flatpacks
   ## flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
