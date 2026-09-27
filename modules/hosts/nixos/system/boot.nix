@@ -15,9 +15,6 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
 	# zRAM
-	# Enmascara el servicio de systemd que activa automáticamente las particiones swap GPT
-	systemd.services."dev-nvme0n1p1.swap".enable = false;
-
   zramSwap = {
     enable = true;
     algorithm = "zstd"; # El algoritmo más eficiente en compresión/velocidad
