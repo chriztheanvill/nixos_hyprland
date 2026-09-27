@@ -16,7 +16,7 @@
 
 	# zRAM
 	# Enmascara el servicio de systemd que activa automáticamente las particiones swap GPT
-	systemd.maskedServices = [ "dev-nvme0n1p1.swap" ];
+	systemd.services."dev-nvme0n1p1.swap".enable = false;
 
   zramSwap = {
     enable = true;
