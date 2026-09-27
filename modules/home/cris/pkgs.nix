@@ -1,5 +1,7 @@
 { config, pkgs, lib, inputs, username, ... }:
-
+let
+  vscode-latest = import ./overrides/vscode-latest.nix { inherit pkgs; };
+in
 {
   # ─────────────────────────────────────────────
   # Paquetes de usuario
@@ -165,7 +167,7 @@
     # ============================================================
     tree-sitter
     bash-language-server
-    vscode
+    #vscode ## nixpkgs
     #vscode-fhs
     #vscodium
     ## zed-editor, tiene problemas con los entornos, esperar a una nueva version
@@ -194,7 +196,7 @@
     inputs.beyond_all_reason.packages.x86_64-linux.default
     inputs.zdl.packages.x86_64-linux.default
     inputs.ziggity.packages.x86_64-linux.default
-  ];
+  ] ++ [vscode-latest];
 
   ## creo que es para tartube
   # nixpkgs.config.permittedInsecurePackages = [

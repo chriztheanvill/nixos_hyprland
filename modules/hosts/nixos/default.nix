@@ -7,6 +7,7 @@ in {
     system = "x86_64-linux";
     specialArgs = { inherit inputs username; };
     modules = [
+      { nixpkgs.overlays = [ (import ../../overlays/vscode-latest.nix) ]; }
       ./configuration.nix
       inputs.home-manager.nixosModules.default   # ← Importante
     ];
