@@ -1,20 +1,21 @@
 { config, pkgs, ... }:
 {
   systemd.user.services = {
-    # easyeffects = {
-    #   Unit = {
-    #     Description = "EasyEffects";
-    #     After = [ "pipewire.service" "pipewire-pulse.service" "wireplumber.service" ];
-    #     Requires = [ "pipewire.service" ];
-    #     PartOf = [ "graphical-session.target" ];
-    #   };
-    #   Install.WantedBy = [ "graphical-session.target" ];
-    #   Service = {
-    #     ExecStart = "${pkgs.easyeffects}/bin/easyeffects --gapplication-service";
-    #     Restart = "on-failure";
-    #     RestartSec = 3;
-    #   };
-    # };
+    easyeffects = {
+      Unit = {
+        Description = "EasyEffects";
+        After = [ "pipewire.service" "pipewire-pulse.service" "wireplumber.service" ];
+        Requires = [ "pipewire.service" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+      Service = {
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
+        ExecStart = "${pkgs.easyeffects}/bin/easyeffects --gapplication-service";
+        Restart = "on-failure";
+        RestartSec = 3;
+      };
+    };
 
     qmmp = {
       Unit = {
@@ -24,7 +25,7 @@
       };
       Install.WantedBy = [ "graphical-session.target" ];
       Service = {
-        ExecStartPre = "${pkgs.coreutils}/bin/sleep 3";
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 2";
         ExecStart = "${pkgs.qmmp}/bin/qmmp";
         Restart = "on-failure";
         RestartSec = 2;

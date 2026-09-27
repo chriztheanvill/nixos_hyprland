@@ -15,7 +15,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
 	# zRAM
-	systemd.targets.swap.enable = false;
+	## systemd.targets.swap.enable = false;
 
   zramSwap = {
     enable = true;

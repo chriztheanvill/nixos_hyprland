@@ -213,9 +213,9 @@
   };
 
   ## ~/.local/share/easyeffects/output
-  services.easyeffects = {
-    enable = true;
-  };
+  # services.easyeffects = {
+  #   enable = true;
+  # };
 
   ## Flatpacks
   ## flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
