@@ -15,7 +15,8 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
 	# zRAM
-	## systemd.targets.swap.enable = false;
+	# Enmascara el servicio de systemd que activa automáticamente las particiones swap GPT
+	systemd.maskedServices = [ "dev-nvme0n1p1.swap" ];
 
   zramSwap = {
     enable = true;
