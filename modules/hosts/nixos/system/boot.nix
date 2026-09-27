@@ -15,6 +15,8 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
 	# zRAM
+	systemd.targets.swap.enable = false;
+
   zramSwap = {
     enable = true;
     algorithm = "zstd"; # El algoritmo más eficiente en compresión/velocidad
