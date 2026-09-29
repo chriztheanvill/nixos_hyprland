@@ -216,12 +216,12 @@ vim.lsp.config("zls", {
 	root_markers = { "build.zig", "build.zig.zon", ".git" },
 })
 
-vim.lsp.config("gdscript", {
-	cmd = { "ncat", "127.0.0.1", "6005" }, -- Godot expone el LSP vía TCP
-	filetypes = { "gd", "gdscript", "gdscript3" },
-	root_markers = { "project.godot", ".git" },
-	-- single_file_support = true,
-})
+-- vim.lsp.config("gdscript", {
+-- 	cmd = { "ncat", "127.0.0.1", "6005" }, -- Godot expone el LSP vía TCP
+-- 	filetypes = { "gd", "gdscript", "gdscript3" },
+-- 	root_markers = { "project.godot", ".git" },
+-- 	-- single_file_support = true,
+-- })
 
 vim.lsp.config("clangd", {
 	cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
@@ -268,7 +268,7 @@ vim.lsp.config("sqls", {
 -- ═══════════════════════════════════════════════════════════════
 -- 6. HABILITAR SERVIDORES
 -- ═══════════════════════════════════════════════════════════════
-vim.lsp.enable({ "bashls", "zls", "gdscript", "clangd", "lua_ls", "marksman", "sqls" })
+vim.lsp.enable({ "bashls", "zls", "clangd", "lua_ls", "marksman", "sqls" })
 
 -- ═══════════════════════════════════════════════════════════════
 -- 7. FORMAT ON SAVE
@@ -347,7 +347,7 @@ vim.diagnostic.config({
 --   vim.lsp.inlay_hint.enable(not enabled)
 --   vim.notify("Inlay hints global: " .. (not enabled and "ON" or "OFF"))
 -- end, { desc = "LSP: toggle inlay hints (global)" })
---
+
 -- ============================================================
 -- Agregar borde redondeado al completion documentation popup
 -- ============================================================

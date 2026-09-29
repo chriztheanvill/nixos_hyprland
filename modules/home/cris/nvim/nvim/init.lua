@@ -106,6 +106,8 @@ if not vim.g.vscode then
 	require("user.direnv_config")
 	-- require("user.persisted") -- meh
 	-- require("user.rooter")
+
+	require("code.godot") -- forzosamente tiene que ir despues de settings y lsp
 end
 
 -- -- Markdown
