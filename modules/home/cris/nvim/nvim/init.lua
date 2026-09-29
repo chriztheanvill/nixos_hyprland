@@ -107,7 +107,7 @@ if not vim.g.vscode then
 	-- require("user.persisted") -- meh
 	-- require("user.rooter")
 
-	require("code.godot") -- forzosamente tiene que ir despues de settings y lsp
+	require("code.godot").setup() -- forzosamente tiene que ir despues de settings y lsp
 end
 
 -- -- Markdown
