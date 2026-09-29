@@ -12,6 +12,8 @@
 
 ```sh
 sudo nix run nixpkgs#dysk
+nix run nixpkgs#radeontop -- -b 1
+
 ```
 
 ## TODO

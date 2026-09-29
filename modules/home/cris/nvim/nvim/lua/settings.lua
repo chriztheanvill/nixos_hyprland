@@ -28,6 +28,7 @@ vim.o.pumborder       = "rounded"
 vim.o.pumheight       = 15
 -- opt.pumheight         = 10
 opt.pumwidth          = 10 -- ancho mínimo
+opt.pummaxwidth       = 50 -- ancho max
 opt.pumblend          = 10 -- transparencia leve del popup
 opt.winborder         = "rounded"
 opt.ruler             = true
@@ -154,32 +155,39 @@ end
 -- Crear undodir si no existe
 -- vim.fn.mkdir(vim.fn.expand("~/.config/nvim/vim-mundo"), "p")
 
+-- ESTE ====================================================================
 -- Cambia el cwd al directorio del archivo/argumento inicial
 -- Sirve para cuando estes en ~/Downloads y ejecutes `nvim /media/cris/Jazz/Documents/`
 -- nvim tome el directorio como argumento y lo ponga como directorio base.
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		local arg = vim.fn.argv(0)
-		if arg and arg ~= "" then
-			local dir = vim.fn.isdirectory(arg) == 1 and arg or vim.fn.fnamemodify(arg, ":p:h")
-			vim.cmd("cd " .. vim.fn.fnameescape(dir))
-		end
-	end,
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	callback = function()
+-- 		local arg = vim.fn.argv(0)
+-- 		if arg and arg ~= "" then
+-- 			local dir = vim.fn.isdirectory(arg) == 1 and arg or vim.fn.fnamemodify(arg, ":p:h")
+-- 			vim.cmd("cd " .. vim.fn.fnameescape(dir))
+-- 		end
+-- 	end,
+-- })
 
 -- ============================================================
 -- Cursor: restaurar posición al abrir archivo
 -- ============================================================
+-- new
 vim.api.nvim_create_autocmd("BufReadPost", {
-	desc = "Restaurar posición del cursor al abrir un archivo",
-	callback = function()
-		local mark = vim.api.nvim_buf_get_mark(0, '"')
-		local line_count = vim.api.nvim_buf_line_count(0)
-		if mark[1] > 0 and mark[1] <= line_count then
-			vim.api.nvim_win_set_cursor(0, mark)
-		end
-	end,
+	callback = function() vim.cmd([[if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif]]) end
 })
+
+-- old
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+-- 	desc = "Restaurar posición del cursor al abrir un archivo",
+-- 	callback = function()
+-- 		local mark = vim.api.nvim_buf_get_mark(0, '"')
+-- 		local line_count = vim.api.nvim_buf_line_count(0)
+-- 		if mark[1] > 0 and mark[1] <= line_count then
+-- 			vim.api.nvim_win_set_cursor(0, mark)
+-- 		end
+-- 	end,
+-- })
 
 -- Just if the theme has bad frameborders
 -- highlight WinSeparator guibg=None
